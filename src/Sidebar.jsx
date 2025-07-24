@@ -1,10 +1,16 @@
-import React, { useCallback } from 'react';
-import { useStore } from '@xyflow/react';
+import React, { useCallback, useState } from 'react';
+import Draggable from './Draggable.jsx';
 
-const transformSelector = (state) => state.transform;
+import lt from "./assets/left.svg"
+import chat from "./assets/chat.svg"
+import { useEffect } from 'react';
 
-export default ({ nodes, setNodes }) => {
-  const transform = useStore(transformSelector);
+export default ({ nodes, setNodes, nodeSelected, message, selectedNodeId }) => {
+  const [msg, setMsg] = useState(message);
+
+  useEffect(() => {
+    setMsg(message)
+  }, [message])
 
   const selectAll = useCallback(() => {
     setNodes((nds) =>
@@ -17,29 +23,55 @@ export default ({ nodes, setNodes }) => {
     );
   }, [setNodes]);
 
+  const deSelectAll = useCallback(() => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        return {
+          ...node,
+          selected: false,
+        };
+      }),
+    );
+  }, [setNodes]);
+
+  const updateMessage = (evt) => {
+    setMsg(evt.target.value)
+    setNodes((nds) =>
+      nds.map((node) => {
+        console.log(selectedNodeId, node.id)
+        return {
+          ...node,
+          data: {
+            msg: node.id == selectedNodeId ? evt.target.value : node.data.msg,
+          }
+        };
+      }),
+    );
+
+  }
+
   return (
     <div className="sidebar">
-      <div className="description">
-        This is an example of how you can access the internal state outside of the
-        ReactFlow component.
-      </div>
-      <div className="title">Zoom & pan transform</div>
-      <div className="transform">
-        [{transform[0].toFixed(2)}, {transform[1].toFixed(2)}, {transform[2].toFixed(2)}]
-      </div>
-      <div className="title">Nodes</div>
-      {nodes.map((node) => (
-        <div key={node.id}>
-          Node {node.id} - x: {node.position.x.toFixed(2)}, y:{' '}
-          {node.position.y.toFixed(2)}
+      {nodeSelected ?
+        <div className="sidebar-message-wrapper">
+          <div className="sidebar-message-head">
+            <img onClick={deSelectAll} width={40} src={lt} alt="chat input" />
+            <label>Message</label>
+            <hr />
+          </div>
+          <div className="sidebar-message-textarea">
+            <textarea value={msg} onChange={updateMessage}></textarea>
+          </div>
+        </div> :
+        <div className="buttons">
+          <Draggable>
+            <div className="xy-theme__button button" onClick={selectAll}>
+              <img width={30} src={chat} alt="chat input" className='blue' />
+              message
+            </div>
+          </Draggable>
         </div>
-      ))}
-
-      <div className="selectall">
-        <button className="xy-theme__button" onClick={selectAll}>
-          select all nodes
-        </button>
-      </div>
+      }
     </div>
   );
 };

@@ -1,5 +1,9 @@
 @import url('./xy-theme.css');
- 
+
+hr {
+  background: #ddd;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -17,6 +21,10 @@ html, body {
 }
 
 .header {
+  display:flex;
+  padding:2px;
+  align-items:center;
+  justify-content:right;
   width: 100vw;
   height: 50px;
   background: #eee;
@@ -36,17 +44,40 @@ html, body {
   display: flex;
   width: 100vw;
   height: 100vh;
-  background: #eee;
 }
 
 .sidebar {
-  padding: 8px;
-  border: 1px solid #ddd;
+  width:33%;
+  display: flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items: center;
+  padding: 10px;
+  border-left: 1px solid #ddd;
+}
+
+.sidebar-message-wrapper {
+  width: 100%;
+  padding: 4px;
+  border-bottom: 1px solid #ddd;
+}
+
+.sidebar-message-textarea {
+  margin-left:-2px;
+  width:100%;
+}
+
+.sidebar-message-head {
+  display: flex;
+  width:100%;
+  gap:33%;
+  align-items:center;
+  border-bottom: 1px solid #ddd;
+  margin-bottom:10px;
 }
 
 .node-wrapper {
   display: flex;
-  width: 100px;
 }
 
 .dark .react-flow__node {
@@ -60,21 +91,24 @@ html, body {
   padding: 0;
   padding-right:4px;
   border:1px solid #eee;
+  max-width:150px;
 }
 
 .node {
   display: flex;
+  max-width:150px;
   flex-direction: column;
   flex-grow:1;
-
 }
 
 .node > .head {
   font-size: 0.5em;
+  max-width:150px;
 }
 
 .head {
-  width: 100%;
+  width: 100%;  
+  max-width:150px;
   height: 10px;
   display: flex;
   padding:2px;
@@ -86,26 +120,70 @@ html, body {
 
 .head-label {
   text-align: left;
-  display:flex;
+  display:flex;  
+  max-width:150px;
   gap: 2px;
+  overflow: hidden;
   align-items: center;     /* vertical centering */
 }
 
 .message {
-  width: 100%;
+  overflow: wrap;
   font-size: 0.7em;
+  max-width:130px;
+  max-height:200px;
   padding: 4px;
   text-align:left;
+  overflow-y: auto;
+  word-break: break-word;
+  white-space: normal;    /* allows wrapping */
+  word-wrap: break-word;  /* break long words */
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+   display: inline-block;  /* shrink-to-fit width, expand height */
 }
 
-.react-flow__handle-left{
-  border: 1px solid red;
+.button{
+  width: 100px;
+  height: 90px;
+  display: flex;
+  border: 1px solid blue;
+  flex-direction:column;
+  border-radius: 0;
+  background: white;
+  color: blue;
 }
 
-img {
+.button-save{
+  display: flex;
+  border: 1px solid blue;
+  flex-direction:column;
+  border-radius: 0;
+  background: white;
+  color: blue;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+img.green {
   filter: invert(55%) sepia(86%) saturate(546%) hue-rotate(72deg) brightness(96%) contrast(91%);
 }
 
+img.blue {
+  filter: invert(43%) sepia(93%) saturate(400%) hue-rotate(200deg) brightness(95%) contrast(90%);
+}
+
+
+textarea {
+  width:100%;
+  height:100px;
+  margin-bottom:10px;
+  resize: none;
+  overflow: auto; /* ensures scroll if content overflows */
+}
 .react-flow__controls {
   display: none;
 }
