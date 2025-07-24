@@ -16,25 +16,27 @@ import '@xyflow/react/dist/style.css';
 import Node from './Node';
 
 const initialNodes = [
+  { id: 'provider-1', type: 'node', data: { msg: 'message from Node 1' }, position: { x: 100, y: 100 } },
   {
-    id: 'provider-1',
-    type: 'node',
-    data: { label: 'Node 1' },
+    id: 'provider-2', type: 'node',
+    data: { msg: 'message from Node 2' },
     position: { x: 250, y: 5 },
   },
-  { id: 'provider-2', data: { label: 'Node 2' }, position: { x: 100, y: 100 } },
-  { id: 'provider-3', data: { label: 'Node 3' }, position: { x: 400, y: 100 } },
-  { id: 'provider-4', data: { label: 'Node 4' }, position: { x: 400, y: 200 } },
+  { id: 'provider-3', type: 'node', data: { msg: 'Node 5' }, position: { x: 400, y: -100 } },
 ];
 
 const initialEdges = [
   {
     id: 'provider-e1-2',
     source: 'provider-1',
+    sourceHandle: 'out',       // ← explicitly choose correct source handle
     target: 'provider-2',
+    targetHandle: 'in',        // ← explicitly choose correct target handle
     animated: true,
-  },
-  { id: 'provider-e1-3', source: 'provider-1', target: 'provider-3' },
+    markerEnd: {
+      type: 'arrowclosed',
+    },
+  }   //  { id: 'provider-e2-3', source: 'provider-2', target: 'provider-3' },
 ];
 
 // we define the nodeTypes outside of the component to prevent re-renderings
@@ -48,6 +50,8 @@ const ProviderFlow = () => {
     (params) => setEdges((els) => addEdge(params, els)),
     [],
   );
+
+  const [selectedNodeIds, setSelectedNodeIds] = useState([]);
 
   return (
     <div className="providerflow">
@@ -65,7 +69,6 @@ const ProviderFlow = () => {
               onConnect={onConnect}
               fitView
             >
-              <Controls />
               <Background />
             </ReactFlow>
             <Sidebar nodes={nodes} setNodes={setNodes} />

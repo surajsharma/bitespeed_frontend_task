@@ -7,6 +7,7 @@ html, body {
   display: flex;
   overflow: hidden;
   flex-direction: column;
+  font-family: sans-serif;
 }
 
 #app {
@@ -41,4 +42,70 @@ html, body {
 .sidebar {
   padding: 8px;
   border: 1px solid #ddd;
+}
+
+.node-wrapper {
+  display: flex;
+  width: 100px;
+}
+
+.dark .react-flow__node {
+  background: #777;
+  color: white;
+}
+ 
+.light .react-flow__node {
+  background: #eee;
+  color: #111;
+  padding: 0;
+  padding-right:4px;
+  border:1px solid #eee;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  flex-grow:1;
+
+}
+
+.node > .head {
+  font-size: 0.5em;
+}
+
+.head {
+  width: 100%;
+  height: 10px;
+  display: flex;
+  padding:2px;
+  background: #b3efe6;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  justify-content:space-between;
+}
+
+.head-label {
+  text-align: left;
+  display:flex;
+  gap: 2px;
+  align-items: center;     /* vertical centering */
+}
+
+.message {
+  width: 100%;
+  font-size: 0.7em;
+  padding: 4px;
+  text-align:left;
+}
+
+.react-flow__handle-left{
+  border: 1px solid red;
+}
+
+img {
+  filter: invert(55%) sepia(86%) saturate(546%) hue-rotate(72deg) brightness(96%) contrast(91%);
+}
+
+.react-flow__controls {
+  display: none;
 }
